@@ -2,45 +2,10 @@ body {
 	background-image: url("https://www.planwallpaper.com/static/images/1619726.jpg");
 }
 
-#title-row {
-	margin-left: 3px;
-	margin-right: 3px;
-	border-radius: 4px;
-	background-color: #740909;
-	color: white;
-	text-align: center;
-	font-size: 40px;
-	font-family: 'Pacifico' cursive;
-	
-}
-
 p {
-    color: white;
-    font-size: 35px;
+	font-family: "Helvetica";
+    font-size: 25px;
     text-align: center;
+    color: white;
 }
 
-input {
-	margin-left: 20px;
-	margin-top: 10px;
-	border-radius: 4px;
-	font-family: 'Hind', sans-serif;
-	height: 34px;
-	
-}
-
-button {
-	margin-left: 20px;
-	margin-top: 15px;
-	border-radius: 4px;
-	align-self: right;
-}
-
-#gifs {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-#content-row {
-	float: left;
-}

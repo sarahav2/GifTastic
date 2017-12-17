@@ -10,22 +10,28 @@ body {
 	color: white;
 	text-align: center;
 	font-size: 40px;
-	font-family: 'Pacifico', cursive;
-	/*font-family: 'Lobster', cursive;*/
+	font-family: 'Pacifico' cursive;
+	
+}
+
+p {
+    color: white;
+    font-size: 35px;
+    text-align: center;
 }
 
 input {
-	margin-left: 3px;
-	margin-top: 3px;
+	margin-left: 20px;
+	margin-top: 10px;
 	border-radius: 4px;
 	font-family: 'Hind', sans-serif;
 	height: 34px;
-	/*font-family: 'Ubuntu Condensed', sans-serif;*/
+	
 }
 
 button {
-	margin-left: 3px;
-	margin-top: 3px;
+	margin-left: 20px;
+	margin-top: 15px;
 	border-radius: 4px;
 	align-self: right;
 }
@@ -36,5 +42,5 @@ button {
 }
 
 #content-row {
-	/*float: left;*/
+	float: left;
 }

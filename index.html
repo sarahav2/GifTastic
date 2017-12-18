@@ -17,20 +17,40 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-        <div class="container">
-                <div class="row" id="button-holder"></div>
-                <div class="row">
-                    <div class="col-md-9" id="image-holder"></div>
-                    <div class="col-md-3" id="form-holder">
-                        <p>Add a movie star you know</p>
-                        <form>
-                            <input type="text" name="" id="person-choice">
-                            <br> <br>
-                            <input type="submit" value="Add person!" id="person-submit">
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <dir class="container">
+        <div class="row"> <!-- start main row -->
+            <div class="row" id="title-row"> <!-- start title row -->
+                <P id="title">GIFTASTIC</P>
+            </div> 
+            <!-- end title row -->
+
+            
+            <div class="row" id="content-row"> <!-- start content row -->
+
+                <div class="col-sm-3" id="gif-search"> 
+                    <input type="text" name="search" id="search-box"> 
+                    <button type="button" class="btn btn-default search-btn" aria-label="Right Align">
+                          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </div> 
+
+                <div class="col-sm-9" > 
+                    <div class="row" id="btn-row"> 
+                        
+                    </div> 
+                    <div class="row" id="gifs"> 
+                        GIFS DISPLAY HERE
+                    </div> 						
+                </div> 
+        
+            </div> 
+            <!-- end content row -->
+            
+        </div> 
+        <!-- end main row -->
+    
+</dir> 
+<!-- end bootstrap container -->
   
     <!-- link gif.js with logic -->
 	<script src="assets/javascript/gif.js"></script>

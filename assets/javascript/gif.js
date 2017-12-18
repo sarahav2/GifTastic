@@ -1,125 +1,96 @@
-alert("Hello");
-//global variable
-var person = ["Khal Drogo", "Dwight Schrute", "Daenerys Targaryen", "Arya Stark", "Little Finger", "Tyrion Lannister", "Jon Snow"];
+////DECLARE GLOBAL VARIABLES////
+var topics = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
+
+////GIPHY-SEARCH OBJECT////
+var gifSearch = {
+	//Local Varialbles//
+	key: "INDjwrzwZWMhIC36wqMyWiamK2KK7IWN", //giphy API key string
+	stillVal: "",
+	gifVal: "",
+	queryUrl: "",
+	currSearchText: "",
+	responseObj: [],
 
 
-function makeButtons() {
+	//Methods//
 
-    $("#button-holder").empty();
+	//composes query url for ajax calls
+	makeQueryUrl: function() { 
+		gifSearch.queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch.currSearchText + "&api_key=" + this.key + "&limit=10&fmt=json";
+	},
 
-    //for loop
-    for (var i = 0; i < topics.length; i++) {
-        //make the button
-        $("<button>")
-            
-            .addClass("person btn btn-lg btn-primary")
-            .attr("data-name", topics[i])
-            .text(topics[i])
-            //append the button to the #button-holder div
-            .appendTo("#button-holder");
-    }
-};
+	//searches for gifs based on input text
+	searchGifs: function() { 
+		gifSearch.currSearchText = $("#search-box").val().trim();
+	},
 
-function makeGIF() {
-    
-    $(".person").removeClass("active");
-    
-    $(this).addClass("active");
-   
-    $("#image-holder").empty();
-    
-    var person = $(this).attr("data-name");
-    
-    var personURL = "https://api.giphy.com/v1/gifs/search?q=" + person + "&api_key=INDjwrzwZWMhIC36wqMyWiamK2KK7IWNlimit=10";
-
-    //AJAX call
-    $.ajax({
-        url: personURL,
+	//makes API request and retrieves json obj (10 gif total)
+	getGifs: function() { 
+		// Perfoming an AJAX GET request to our queryURL
+      $.ajax({
+        url: gifSearch.queryURL,
         method: "GET"
-    }).done(function (r) {
+        // dataType: "json"
+      })
+      // After the data from the AJAX request comes back
+      .done(function(response) {
+      	console.log(response);
+      	// store response for parsing
+      	gifSearch.responseObj = response;
+      	console.log(gifSearch.responseObj);
+    	});
+	},
 
-        //if there's no images returned we should let the user know
-        if (r.data.length == 0) {
-            alert("Sorry, but it appears we couldn't find any images with the name " + animal + ". Please check to see if your spelling is off, make a new button, and try again!")
-        }
+	//displays the gif still img file in dynamically created <img> elements.
+	//stores the still (data-still) and animated gif (data-gif) url values 
+	//as sttributes of the element.
+	displayGifs: function() { 
 
-        //otherwise if we got images back we're good to go!
-        else {
-            //when we got our stuff we gotta make some still images out of them
-            for (var i = 0; i < r.data.length; i++) {
-                //make a div to store the image and the rating
-                $("<div>")
-                    //add class so we can get these buddies looking good
-                    .addClass("inline text-center")
-                    //give it an id that we can use to append the picture to later
-                    .attr("id", "animal" + i)
-                    //add the rating to the div
-                    .html("<p>Rating: " + r.data[i].rating + "</p>")
-                    //append it to the #image-holder div
-                    .appendTo("#image-holder");
-                //make an image tag
-                $("<img>")
-                    //give it an attribute to go back to later so we know its static
-                    .attr({
-                        "is-static": "yes",
-                        //give it attributes that place the static and moving urls inside the img
-                        "static": r.data[i].images.fixed_width_still.url,
-                        "motion": r.data[i].images.fixed_width.url,
-                        //give it the static url
-                        "src": r.data[i].images.fixed_width_still.url,
-                    })
-                    //give it a class so we can animate it!
-                    .addClass("person-image")
-                    //prepend this to the div with the rating we just made
-                    .prependTo("#person" + i);
+		// // store the still image url
+        // this.stillVal = ;
+        // // store the gif image url
+        // this.gifVal = ;
 
-            }
-        }
-    })
-};
+	},
 
-//function to make our GIFs animate!
-function gifAnimate() {
-    //if it's static
-    if ($(this).attr("is-static") == "yes") {
-        //change the static url to the animated one!
-        $(this).attr("src", $(this).attr("motion"));
-        //change is-static to "no"
-        $(this).attr("is-static", "no");
-    }
-    //otherwise if it's not static
-    else {
-        //change the animated url to the static one!
-        $(this).attr("src", $(this).attr("static"));
-        //change is-static back to "yes"
-        $(this).attr("is-static", "yes");
-    }
-};
+	//dynamically creates a button title by the search term and appends it to #btn-row.
+	//store queryUrl val in data-queryUrl attribute
+	makeSearchButton: function() {
+		var btn = $("<button>");
+		btn.attr("type", "button");
+		btn.attr("class", "btn btn-default named-button");
+		btn.attr("data-queryUrl", gifSearch.queryUrl);
+		btn.text(gifSearch.currSearchText);
+		$("#btn-row").append(btn);
+	}
 
-$(document).ready(function () {
-    
-    $("#person-submit").click(function (e) {
-       
-        e.preventDefault();
-       
-        var person = $("#person-choice").val().trim();
-  
-        $("#person-choice").val("");
-        
-        topics.push(animal);
-      
-        makeButtons();
-    })
+}
 
-    //run our make animal GIF function when an animal is clicked
-    $(document).on("click", ".person", makeGIF);
+////PAGE LOAD SCRIPTS////
 
-    //run our function to make gifs animate or go static again
-    $(document).on("click", ".person-image", gifAnimate);
+//Populate default buttons based on topics[] values. Stores query url string as
+//an attribute of the button element.
+for (var i = 0; i < topics.length; i++) {
+	gifSearch.currSearchText = topics[i];
+		console.log(gifSearch.currSearchText);
+	gifSearch.makeQueryUrl();
+		console.log(gifSearch.queryUrl);
+	gifSearch.makeSearchButton();
+}
 
-    //calling function to make buttons on page load
-    makeButtons();
 
+////ONCLICK EVENTS////
+
+//Text search onclick. target is .search-btn class
+
+
+//Existing button search onclick. target is .named-button class.
+//uses the data-queryUrl attribute for ajax call
+$(".named-button").on("click", function(){
+	gifSearch.queryUrl = $(this).attr("data-queryUrl");
+	console.log(gifSearch.queryUrl);
+	gifSearch.getGifs();
 });
-    
-       
+
+
+//Gif start and pause onclick. target is img element

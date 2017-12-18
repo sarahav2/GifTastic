@@ -1,4 +1,5 @@
-$(document).ready(function)
+$("button").on("click", function() {
+
 var person = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
 
 function makebutton (){
@@ -62,17 +63,15 @@ else{
          console.log(queryURL);
 
          console.log(response);
-         $("#gifs-appear-here").empty();
-         // storing the data from the AJAX request in the results variable
+
          var results = response.data;
 
          // Looping through each result item
          for (var i = 0; i < results.length; i++) {
 
-           // Creating and storing a div tag
+        
            var personDiv = $("<div>");
 
-           // Creating a paragraph tag with the result item's rating
            var p = $("<p>").text("Rating: " + results[i].rating);
 
            // Creating and storing an image tag
@@ -87,8 +86,10 @@ else{
 
 
            // Appending the paragraph and image tag to the personDiv
-          personDiv.append(p);
+           personDiv.append(p);
            personDiv.append(personImage);
 
          
            $("#gifs-appear-here").prepend(personDiv);
+        }
+    });

@@ -1,4 +1,5 @@
-$("button").on("click", function() {
+$( document ).ready(function() {
+    console.log( "ready!" );
 
 var person = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
 
@@ -93,3 +94,7 @@ else{
            $("#gifs-appear-here").prepend(personDiv);
         }
     });
+
+  });
+
+});

@@ -1,7 +1,4 @@
-$( document ).ready(function() {
-    console.log( "ready!" );
-
-var person = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
+  var person = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
 
 function makebutton (){
     $("#buttondiv").empty();
@@ -96,5 +93,3 @@ else{
     });
 
   });
-
-});

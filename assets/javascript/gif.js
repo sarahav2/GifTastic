@@ -1,92 +1,94 @@
-////DECLARE GLOBAL VARIABLES////
-var topics = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
+$(document).ready(function)
+var person = ["Khal Drogo", "Little Finger", "Arya Stark", "Tyrion Lannister", "Jon Snow", "Khalessi"]; //topics array 
 
-////GIPHY-SEARCH OBJECT////
-var gifSearch = {
-	//Local Varialbles//
-	key: "INDjwrzwZWMhIC36wqMyWiamK2KK7IWN", //giphy API key string
-	stillVal: "",
-	gifVal: "",
-	queryUrl: "",
-	currSearchText: "",
-	responseObj: [],
+function makebutton (){
+    $("#buttondiv").empty();
+   
+    for (var i = 0; i <items.length; i++) {
+      var buttons= $("<button>")
+      buttons.attr ("data-person", items [i])
+      buttons.text (items [i])
+      buttons.addClass ("btn")
+      $("#buttondiv").append(buttons);
+   
+    }
+   }
 
+makebutton();
 
-	//Methods//
-
-	makeQueryUrl: function() { 
-		gifSearch.queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch.currSearchText + "&api_key=" + this.key + "&limit=10&fmt=json";
-	},
-
-	//searches for gifs based on input text
-	searchGifs: function() { 
-		gifSearch.currSearchText = $("#search-box").val().trim();
-	},
-
-	//makes API request and retrieves json obj (10 gif total)
-	getGifs: function() { 
-		// Perfoming an AJAX GET request to our queryURL
-      $.ajax({
-        url: gifSearch.queryURL,
-        method: "GET"
-      }).done(function(response) {
-      	console.log(response);
-      	// store response
-      	gifSearch.responseObj = response;
-      	console.log(gifSearch.responseObj);
-    	});
-	},
-
-	//displays the gif still img file in dynamically created <img> elements.
-	//stores the still (data-still) and animated gif (data-gif) url values 
-	
-	displayGifs: function() { 
-
-		// // store the still image url
-        // this.stillVal = ;
-        // // store the gif image url
-        // this.gifVal = ;
-
-	},
-
-	//dynamically creates a button title by the search term and appends it to #btn-row.
-	//store queryUrl val in data-queryUrl attribute
-	makeSearchButton: function() {
-		var btn = $("<button>");
-		btn.attr("type", "button");
-		btn.attr("class", "btn btn-default named-button");
-		btn.attr("data-queryUrl", gifSearch.queryUrl);
-		btn.text(gifSearch.currSearchText);
-		$("#btn-row").append(btn);
-	}
-
-}
-
-////PAGE LOAD SCRIPTS////
-
-//Populate default buttons based on topics[] values. Stores query url string as
-//an attribute of the button element.
-for (var i = 0; i < topics.length; i++) {
-	gifSearch.currSearchText = topics[i];
-		console.log(gifSearch.currSearchText);
-	gifSearch.makeQueryUrl();
-		console.log(gifSearch.queryUrl);
-	gifSearch.makeSearchButton();
-}
-
-
-////ONCLICK EVENTS////
-
-//Text search onclick. target is .search-btn class
-
-
-//Existing button search onclick. target is .named-button class.
-//uses the data-queryUrl attribute for ajax call
-$(".named-button").on("click", function(){
-	gifSearch.queryUrl = $(this).attr("data-queryUrl");
-	console.log(gifSearch.queryUrl);
-	gifSearch.getGifs();
+$(document).on("click", "#add-item",function(){
+ event.preventDefault();
+var newitem = $("#form-input").val();
+items.push(newitem);
+makebutton();
 });
 
+//Click for images
+$(document).on("click", ".gifimage", function (){
+ //grab the state from the image
+var state = $(this).attr("data-state");
+console.log("this is the state: " + state);
+//We need to flip the state from still to animate
+if(state === "still"){
+ $(this).attr("src", $(this).attr("data-animate"));
+ $(this).attr("data-state", "animate");
+}
 
-//Gif start and pause onclick. target is img element
+else{
+ $(this).attr("src", $(this).attr("data-still"));
+ $(this).attr("data-state", "still");
+
+}
+
+});
+
+   // Adding click event for class
+   $(document).on("click", ".btn", function() {
+
+   
+      var person = $(this).attr("data-person");
+
+
+     // Constructing a queryURL
+     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + person + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+     // Performing an AJAX request with the queryURL
+     $.ajax({
+         url: queryURL,
+         method: "GET"
+       })
+       // After data comes back from the request
+       .done(function(response) {
+         console.log(queryURL);
+
+         console.log(response);
+         $("#gifs-appear-here").empty();
+         // storing the data from the AJAX request in the results variable
+         var results = response.data;
+
+         // Looping through each result item
+         for (var i = 0; i < results.length; i++) {
+
+           // Creating and storing a div tag
+           var personDiv = $("<div>");
+
+           // Creating a paragraph tag with the result item's rating
+           var p = $("<p>").text("Rating: " + results[i].rating);
+
+           // Creating and storing an image tag
+           var personImage = $("<img>");
+           // Setting the src attribute of the image to a property pulled off the result item
+           personImage.attr("src", results[i].images.fixed_height_still.url);
+           personImage.attr("data-animate", results[i].images.fixed_height.url);
+           personImage.attr("data-still", results[i].images.fixed_height_still.url);
+           personImage.attr("data-state", "still");
+           personImage.addClass("gifimage");
+          
+
+
+           // Appending the paragraph and image tag to the personDiv
+          personDiv.append(p);
+           personDiv.append(personImage);
+
+         
+           $("#gifs-appear-here").prepend(personDiv);

@@ -14,7 +14,6 @@ var gifSearch = {
 
 	//Methods//
 
-	//composes query url for ajax calls
 	makeQueryUrl: function() { 
 		gifSearch.queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch.currSearchText + "&api_key=" + this.key + "&limit=10&fmt=json";
 	},
@@ -30,12 +29,9 @@ var gifSearch = {
       $.ajax({
         url: gifSearch.queryURL,
         method: "GET"
-        // dataType: "json"
-      })
-      // After the data from the AJAX request comes back
-      .done(function(response) {
+      }).done(function(response) {
       	console.log(response);
-      	// store response for parsing
+      	// store response
       	gifSearch.responseObj = response;
       	console.log(gifSearch.responseObj);
     	});
@@ -43,7 +39,7 @@ var gifSearch = {
 
 	//displays the gif still img file in dynamically created <img> elements.
 	//stores the still (data-still) and animated gif (data-gif) url values 
-	//as sttributes of the element.
+	
 	displayGifs: function() { 
 
 		// // store the still image url

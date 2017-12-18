@@ -10,7 +10,7 @@ body {
 	background-color: #740909;
 	color: white;
 	text-align: center;
-	font-size: 50px;
+	font-size: 40px;
 	font-family: 'Pacifico', cursive;
 	/*font-family: 'Lobster', cursive;*/
 }
@@ -33,7 +33,7 @@ button {
 
 #gifs {
     color: white;
-	margin-top: 5px;
+	margin-top:25px;
 	margin-bottom: 5px;
 }
 

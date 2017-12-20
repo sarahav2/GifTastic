@@ -17,39 +17,29 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-    <dir class="container">
-        <div class="row"> <!-- start main row -->
-            <div class="row" id="title-row"> <!-- start title row -->
-                <P id="title">GIFTASTIC</P>
-            </div> 
-            <!-- end title row -->
-
+    <div class="container">
+        <div id="nbabuttons">
+            <button class="btn got" data-name="khal">Khal Drogo</button>
+            <button class="btn got" data-name="little">Little Finger</button>
+            <button class="btn got" data-name="arya">Arya Stark</button>
+            <button class="btn got" data-name="jon">Jon Snow</button>
+            <button class="btn got" data-name="tyrion">Tyrion Lannister</button>
+            <button class="btn got" data-name="khalessi">Khalessi</button>
+            <button class="btn got" data-name="hodor">Hodor</button>
             
-            <div class="row" id="content-row"> <!-- start content row -->
-
-                <div class="col-sm-3" id="gif-search"> 
-                    <input type="text" name="search" id="search-box"> 
-                    <button type="button" class="btn btn-default search-btn" aria-label="Right Align">
-                          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </button>
-                </div> 
-
-                <div class="col-sm-9" > 
-                    <div class="row" id="btn-row"> 
-                        
-                    </div> 
-                    <div class="row" id="gifs"> 
-                        GIFS DISPLAY HERE
-                    </div> 						
-                </div> 
-        
-            </div> 
-            <!-- end content row -->
-            
-        </div> 
-        <!-- end main row -->
-    
-</dir> 
+        </div>
+    </div>
+    <div class="container">
+        <div id="gifs" style="float:left"></div>
+        <div style="float:right">
+            <h1>Add a GOT cast</h1>
+            <form id="gif">
+                <label for="gif-search"></label>
+                <input type="text" value="" id="gif-search">
+                <input type="submit" name="Button" class="btn btn-success" id="aButton">
+            </form>
+        </div>
+    </div>
 <!-- end bootstrap container -->
   
     <!-- link gif.js with logic -->
